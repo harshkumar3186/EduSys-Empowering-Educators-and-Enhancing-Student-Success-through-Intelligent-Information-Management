@@ -1,0 +1,159 @@
+#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct Student {
+    string name;
+    int age;
+    string grade;
+    string address;
+};
+
+class StudentInformationSystem {
+private:
+    vector<Student> students;
+
+public:
+    void addStudent(const Student& student) {
+        students.push_back(student);
+        cout << "Student added successfully." << endl;
+    }
+
+    void displayStudents() {
+        if (students.empty()) {
+            cout << "No students found." << endl;
+            return;
+        }
+
+        cout << "----------------------- Student Information -----------------------" << endl;
+        for (const auto& student : students) {
+            cout << "Name: " << student.name << endl;
+            cout << "Age: " << student.age << endl;
+            cout << "Grade: " << student.grade << endl;
+            cout << "Address: " << student.address << endl;
+            cout << "-----------------------------------------------------------------" << endl;
+        }
+    }
+
+    void searchStudent(const string& name) {
+        bool found = false;
+
+        cout << "-------------------------- Search Results --------------------------" << endl;
+        for (const auto& student : students) {
+            if (student.name == name) {
+                cout << "Name: " << student.name << endl;
+                cout << "Age: " << student.age << endl;
+                cout << "Grade: " << student.grade << endl;
+                cout << "Address: " << student.address << endl;
+                cout << "-----------------------------------------------------------------" << endl;
+                found = true;
+            }
+        }
+
+        if (!found) {
+            cout << "No student with the name '" << name << "' found." << endl;
+        }
+    }
+
+    void deleteStudent(const string& name) {
+        bool deleted = false;
+
+        for (auto it = students.begin(); it != students.end(); ++it) {
+            if (it->name == name) {
+                students.erase(it);
+                cout << "Student '" << name << "' deleted successfully." << endl;
+                deleted = true;
+                break;
+            }
+        }
+
+        if (!deleted) {
+            cout << "No student with the name '" << name << "' found." << endl;
+        }
+    }
+
+    void displayMenu() {
+        cout << "--------------------- Student Information System ---------------------" << endl;
+        cout << "1. Add Student" << endl;
+        cout << "2. Display Students" << endl;
+        cout << "3. Search Student" << endl;
+        cout << "4. Delete Student" << endl;
+        cout << "5. Quit" << endl;
+    }
+};
+
+int main() {
+    StudentInformationSystem sis;
+    int choice;
+
+    while (true) {
+        sis.displayMenu();
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                Student student;
+                cout << "Enter student name: ";
+                cin.ignore();
+                getline(cin, student.name);
+                cout << "Enter student age: ";
+                cin >> student.age;
+                cout << "Enter student grade: ";
+                cin.ignore();
+                getline(cin, student.grade);
+                cout << "Enter student address: ";
+                getline(cin, student.address);
+                sis.addStudent(student);
+                break;
+            }
+            case 2:
+                sis.displayStudents();
+                break;
+            case 3: {
+                string name;
+                cout << "Enter student name to search: ";
+                cin.ignore();
+                getline(cin, name);
+                sis.searchStudent(name);
+                break;
+            }
+            case 4: {
+                string name;
+                cout << "Enter student name to delete: ";
+                cin.ignore();
+                getline(cin, name);
+                sis.deleteStudent(name);
+                break;
+            }
+            case 5:
+                cout << "Exiting program..." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
+/*
+( #include <bits/stdc++.h> ) -> This line includes the entire standard library in a single line.
+The code begins by including the necessary header files for input/output operations (iostream), string manipulation (string), and vector container (vector).
+Next, a struct called Student is defined. It holds information about a student, including their name, age, grade, and address.
+After that, a class named StudentInformationSystem is declared. This class encapsulates the functionalities of the student information system. It has a private member variable students, which is a vector of Student objects. This vector will be used to store and manage student records.
+The class provides several member functions.
+The addStudent function allows the administrator to add a new student to the system. It takes a Student object as input and pushes it into the students vector. It also displays a success message.
+The displayStudents function is used to display the information of all the students stored in the system. It first checks if the students vector is empty. If it is, it displays a message indicating that no students were found. Otherwise, it iterates through the students vector using a range-based for loop and prints the details of each student, including their name, age, grade, and address.
+The searchStudent function allows the administrator to search for a specific student by their name. It takes a string parameter name as input, representing the name of the student to search for. It initializes a boolean variable found as false. It then iterates through the students vector using a range-based for loop. For each student, it compares the name parameter with the student's name. If a match is found, it displays the student's details and sets found to true. If no matching student is found, it displays a message indicating that no student with the given name was found.
+The deleteStudent function allows the administrator to delete a student from the system. It takes a string parameter name as input, representing the name of the student to delete. It initializes a boolean variable deleted as false. It then iterates through the students vector using an iterator it. It compares the name parameter with the student's name using the -> operator. If a match is found, it erases the student from the students vector, displays a deletion success message, and sets deleted to true. If no matching student is found, it displays a message indicating that no student with the given name was found.
+The displayMenu function is responsible for displaying the main menu of the student information system. It presents the available options to the administrator, such as adding a student, displaying all students, searching for a student, deleting a student, and quitting the program.
+In the main function, an object sis of the StudentInformationSystem class is created. It serves as the entry point for the system. Inside a while (true) loop, the main menu is displayed, and the user is prompted to enter their choice. The choice is read from the input using cin. Based on the user's choice, the corresponding functionality of the StudentInformationSystem class is invoked. This process continues until the user chooses to quit the program.
+*/
